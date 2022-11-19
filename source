@@ -1,0 +1,40 @@
+#define rccahb1enR *(( unsigned volatile int *) 0x40023830)
+#define gpiodmask 1<<3
+#define gpiodModr *((unsigned volatile int *) 0x40020c00)
+#define gpiodP12mask 1<<24
+#define gpiodP13mask 1<<26
+#define gpiodOdr *((unsigned volatile int *) 0x40020c14)
+#define gpiodP12onmask 1<<12
+#define gpiodP12ofmask 0<<12
+#define gpiodP13onmask 1<<13
+#define gpiodP13ofmask ~(1<<13)
+
+void delay_turnoff(){
+     int delayed= 0x0FFFFFFF;
+     while(delayed--){
+    	 }
+     }
+
+int main () {
+      rccahb1enR =gpiodmask;
+      gpiodModr=gpiodP12mask;
+      gpiodModr |=gpiodP13mask;
+
+      //Name:mustafafirat
+      for(int i=1;i<=12;i++){
+		  gpiodOdr=gpiodP12onmask;
+		  delay_turnoff(1000);
+		  gpiodOdr&=gpiodP12ofmask;
+		  delay_turnoff(1000);
+	}
+
+      //Surname:polat
+      for(int i=1;i<=5;i++){
+    	  gpiodOdr |=gpiodP13onmask;
+      delay_turnoff(1000);
+          gpiodOdr&=gpiodP13ofmask;
+          delay_turnoff(1000);
+        }
+
+ return 0;
+}
